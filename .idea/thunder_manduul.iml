@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/lesson_01_thunder/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_01_thunder/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_01_thunder/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_02/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_02/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_02/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_03/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_03/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_03/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_04/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_04/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_04/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_05/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_05/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_05/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_06/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_06/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_06/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_07/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_07/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_07/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
