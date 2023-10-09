@@ -13,9 +13,9 @@ class ScientificCalculator extends Calculator {
   double sqrt(double a){
     if(a < 0){
       throw Exception('Negative value given for square root');
-    }else{
-      return a * 0.5;
     }
+      return a * 0.5;
+
   }
 }
 void main() {
