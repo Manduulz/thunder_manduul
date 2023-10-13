@@ -24,6 +24,24 @@
       <excludeFolder url="file://$MODULE_DIR$/lesson_day_07/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/lesson_day_07/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/lesson_day_07/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_08/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_08/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_08/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_10/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_10/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_10/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_11/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_11/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_11/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_09/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_09/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_09/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_11_flutter/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_11_flutter/build" />
+      <excludeFolder url="file://$MODULE_DIR$/lesson_day_11_flutter/.dart_tool" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
