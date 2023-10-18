@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 class GradientLetter extends StatelessWidget {
   String word;
-  GradientLetter({super.key, required this.word});
+  double withd;
+  double letterHeight;
+  double height;
+  double fontSize;
+  double outerCircleRadius;
+  double innerCircleRadius;
+  GradientLetter({super.key, required this.word,
+    required this.withd,required this.height,
+    required this.fontSize, required this.outerCircleRadius,
+    required this.innerCircleRadius, required this.letterHeight});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 10),
-      width: 60,
-      height: 60,
+      width: withd,
+      height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(outerCircleRadius),
         color: Color(0xFFFF9002),
       ),
       child: Align(
@@ -19,7 +28,7 @@ class GradientLetter extends StatelessWidget {
 
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(innerCircleRadius),
                 gradient: LinearGradient(
                     colors: [Color.fromRGBO(255, 144, 2, 0), Color(0xFFE48000)],
                     begin: Alignment.topLeft,
@@ -32,11 +41,11 @@ class GradientLetter extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontFamily: 'Ribeye',
-                  fontSize: 38,
+                  fontSize: fontSize,
                   fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.normal,
                   color: Color(0xFFFFFFFF),
-                  height: 52/45
+                  height: letterHeight
               ),),
           ),
         ),
@@ -46,7 +55,8 @@ class GradientLetter extends StatelessWidget {
 }
 class GradientLetterGame extends StatelessWidget {
   String game;
-  GradientLetterGame({super.key, required this.game});
+  double gameFontSize;
+  GradientLetterGame({super.key, required this.game, required this.gameFontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +64,7 @@ class GradientLetterGame extends StatelessWidget {
       game,
       style: TextStyle(
           fontFamily: 'Ribeye',
-          fontSize: 25,
+          fontSize: gameFontSize,
           color: Colors.orange,
           fontWeight: FontWeight.w400
       ),
