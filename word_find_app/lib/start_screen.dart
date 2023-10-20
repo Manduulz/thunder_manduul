@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:word_find_app/components/input_field.dart';
 import 'package:word_find_app/gradient_letter.dart';
 
 class StartScreen extends StatelessWidget {
@@ -20,36 +21,7 @@ class StartScreen extends StatelessWidget {
               Padding(padding: EdgeInsets.only(top: 40)),
               GradientLetterGame(game: 'Player name', gameFontSize: 20),
               Padding(padding: EdgeInsets.only(top: 15)),
-              Container(
-                width: 310,
-                height: 50,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white),
-                child: TextField(
-                  textAlign: TextAlign.start,
-
-                  controller: TextEditingController(),
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: Image.asset('assets/images/close 1.png'),
-
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 0, style: BorderStyle.none)),
-                    labelText: 'Type here',
-                    labelStyle: TextStyle(color: Colors.orange),
-                  ),
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w600,
-                      height: 40 / 18,
-                      color: Colors.orange),
-                ),
-              )
+              InputField(onSubmitted: this.onSubmitted(),)
             ],
           ),
         ),
@@ -117,5 +89,9 @@ class StartScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void onSubmitted(){
+
   }
 }
