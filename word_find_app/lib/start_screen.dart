@@ -21,7 +21,33 @@ class StartScreen extends StatelessWidget {
               Padding(padding: EdgeInsets.only(top: 40)),
               GradientLetterGame(game: 'Player name', gameFontSize: 20),
               Padding(padding: EdgeInsets.only(top: 15)),
-              InputField(onSubmitted: this.onSubmitted(),)
+              InputField(onSubmitted: (String value){
+                this.onSubmitted(value);
+              }),
+              Padding(padding: EdgeInsets.only(top: 10)),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18))),
+                onPressed: () {},
+                child: Container(
+                  width: 310,
+                  height: 50,
+                  decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                  padding: EdgeInsets.only(top: 10),
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    'START',
+                    style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                  ),
+                ),
+              )
             ],
           ),
         ),
@@ -91,7 +117,7 @@ class StartScreen extends StatelessWidget {
     );
   }
 
-  void onSubmitted(){
+  void onSubmitted(String value){
 
   }
 }

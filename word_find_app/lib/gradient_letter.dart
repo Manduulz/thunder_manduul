@@ -71,5 +71,62 @@ class GradientLetterGame extends StatelessWidget {
     );
   }
 }
+class TrophyNumber extends StatefulWidget {
+  final String title;
+  const TrophyNumber({super.key, required this.title});
+
+  @override
+  State<TrophyNumber> createState() => _TrophyNumberState();
+}
+
+class _TrophyNumberState extends State<TrophyNumber> {
+  int _counter = 0;
+  void _incrementCounter(){
+    setState(() {
+      _counter++;
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          icon: Image.asset('assets/images/exit.png'),
+          onPressed: () {},
+        ),
+        title: Column(
+          children: [
+            Text(
+              'SRA',
+              style: TextStyle(
+                  fontFamily: 'Ribeye',
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
+                  height: 33 / 24,
+                  color: Colors.orange),
+            ),
+          ],
+        ),
+        actions: [
+          Row(
+            children: [
+              SizedBox(
+                width: 26,
+                height: 26,
+                child: Image.asset('assets/images/trophy 1.png'),
+              ),
+
+            ],
+
+          )
+        ],
+      ),
+    );
+  }
+}
+
 
 

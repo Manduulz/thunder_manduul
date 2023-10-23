@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:word_find_app/start_screen.dart';
+import 'package:word_find_app/task_screen.dart';
 
 import 'home_screen.dart';
 
@@ -8,7 +9,7 @@ void main() {
     theme: ThemeData(
       fontFamily: 'Nunito',
     ),
-    home: StartScreen(),)
+    home: TaskScreen(),)
   );
 }
 
