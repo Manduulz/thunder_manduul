@@ -1,43 +1,48 @@
 import 'package:flutter/material.dart';
+
 class GradientLetter extends StatelessWidget {
-  String word;
-  double withd;
-  double letterHeight;
-  double height;
-  double fontSize;
-  double outerCircleRadius;
-  double innerCircleRadius;
-  GradientLetter({super.key, required this.word,
-    required this.withd,required this.height,
-    required this.fontSize, required this.outerCircleRadius,
-    required this.innerCircleRadius, required this.letterHeight});
+  final String word;
+  final double width;
+  final double letterHeight;
+  final double height;
+  final double fontSize;
+  final double outerCircleRadius;
+  final double innerCircleRadius;
+
+  const GradientLetter(
+      {super.key,
+      required this.word,
+      required this.width,
+      required this.height,
+      required this.fontSize,
+      required this.outerCircleRadius,
+      required this.innerCircleRadius,
+      required this.letterHeight});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 10),
-      width: withd,
+      padding: const EdgeInsets.only(top: 10),
+      width: width,
       height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(outerCircleRadius),
-        color: Color(0xFFFF9002),
+        color: const Color(0xFFFF9002),
       ),
       child: Align(
         alignment: Alignment.center,
         child: FractionallySizedBox(
-
           child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(innerCircleRadius),
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                     colors: [Color.fromRGBO(255, 144, 2, 0), Color(0xFFE48000)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     stops: [-0.025, 1.6875],
-                    transform: GradientRotation(180)
-                )
-            ),
-            child: Text(word,
+                    transform: GradientRotation(180))),
+            child: Text(
+              word,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontFamily: 'Ribeye',
@@ -45,18 +50,21 @@ class GradientLetter extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.normal,
                   color: Color(0xFFFFFFFF),
-                  height: letterHeight
-              ),),
+                  height: letterHeight),
+            ),
           ),
         ),
       ),
     );
   }
 }
+
 class GradientLetterGame extends StatelessWidget {
   String game;
   double gameFontSize;
-  GradientLetterGame({super.key, required this.game, required this.gameFontSize});
+
+  GradientLetterGame(
+      {super.key, required this.game, required this.gameFontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +74,14 @@ class GradientLetterGame extends StatelessWidget {
           fontFamily: 'Ribeye',
           fontSize: gameFontSize,
           color: Colors.orange,
-          fontWeight: FontWeight.w400
-      ),
+          fontWeight: FontWeight.w400),
     );
   }
 }
+
 class TrophyNumber extends StatefulWidget {
   final String title;
+
   const TrophyNumber({super.key, required this.title});
 
   @override
@@ -81,11 +90,13 @@ class TrophyNumber extends StatefulWidget {
 
 class _TrophyNumberState extends State<TrophyNumber> {
   int _counter = 0;
-  void _incrementCounter(){
+
+  void _incrementCounter() {
     setState(() {
       _counter++;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,15 +129,10 @@ class _TrophyNumberState extends State<TrophyNumber> {
                 height: 26,
                 child: Image.asset('assets/images/trophy 1.png'),
               ),
-
             ],
-
           )
         ],
       ),
     );
   }
 }
-
-
-

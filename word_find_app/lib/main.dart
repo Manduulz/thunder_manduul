@@ -9,7 +9,7 @@ void main() {
     theme: ThemeData(
       fontFamily: 'Nunito',
     ),
-    home: TaskScreen(),)
+    home: HomeScreen(),)
   );
 }
 

@@ -32,7 +32,9 @@ class _InputFieldState extends State<InputField> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20), color: Colors.white),
       child: TextField(
-        onSubmitted: widget.onSubmitted,
+        onSubmitted: (String value){
+          widget.onSubmitted(value);
+        },
         textAlign: TextAlign.start,
         controller: _textEditingController,
         decoration: InputDecoration(
