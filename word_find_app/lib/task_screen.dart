@@ -33,7 +33,6 @@ class _TaskScreenState extends State<TaskScreen> {
         ),
         title: Column(
           children: [
-
             Text(
               '${newUser.name}',
               style: TextStyle(
