@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:word_find_app/components/lay_out_builder.dart';
+import 'package:word_find_app/components/word_search_widget.dart';
 import 'package:word_find_app/gradient_letter.dart';
 import 'package:word_find_app/model/user_model.dart';
 import 'package:word_find_app/start_screen.dart';
@@ -17,8 +19,13 @@ class _TaskScreenState extends State<TaskScreen> {
   int scorePoint = 0;
   int fullPoint = 10;
 
+
+
   @override
   Widget build(BuildContext context) {
+
+      print(widget.user.name);
+
     return Scaffold(
       backgroundColor: Color(0xFFFBF5F2),
       appBar: AppBar(
@@ -34,7 +41,7 @@ class _TaskScreenState extends State<TaskScreen> {
         title: Column(
           children: [
             Text(
-              '${newUser.name}',
+              newUser.name,
               style: TextStyle(
                   fontFamily: 'Ribeye',
                   fontSize: 24,
@@ -218,234 +225,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     decoration: BoxDecoration(color: Colors.white),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                child: GradientLetter(
-                                    word: 'A',
-                                    width: 43,
-                                    height: 43,
-                                    fontSize: 28,
-                                    outerCircleRadius: 8,
-                                    innerCircleRadius: 4,
-                                    letterHeight: 12 / 15),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                child: GradientLetter(
-                                    word: 'E',
-                                    width: 43,
-                                    height: 43,
-                                    fontSize: 28,
-                                    outerCircleRadius: 8,
-                                    innerCircleRadius: 4,
-                                    letterHeight: 12 / 15),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                child: GradientLetter(
-                                    word: 'T',
-                                    width: 43,
-                                    height: 43,
-                                    fontSize: 28,
-                                    outerCircleRadius: 8,
-                                    innerCircleRadius: 4,
-                                    letterHeight: 12 / 15),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                child: GradientLetter(
-                                    word: 'I',
-                                    width: 43,
-                                    height: 43,
-                                    fontSize: 28,
-                                    outerCircleRadius: 8,
-                                    innerCircleRadius: 4,
-                                    letterHeight: 12 / 15),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                child: GradientLetter(
-                                    word: 'P',
-                                    width: 43,
-                                    height: 43,
-                                    fontSize: 28,
-                                    outerCircleRadius: 8,
-                                    innerCircleRadius: 4,
-                                    letterHeight: 12 / 15),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                child: GradientLetter(
-                                    word: 'M',
-                                    width: 43,
-                                    height: 43,
-                                    fontSize: 28,
-                                    outerCircleRadius: 8,
-                                    innerCircleRadius: 4,
-                                    letterHeight: 12 / 15),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                child: GradientLetter(
-                                    word: 'O',
-                                    width: 43,
-                                    height: 43,
-                                    fontSize: 28,
-                                    outerCircleRadius: 8,
-                                    innerCircleRadius: 4,
-                                    letterHeight: 12 / 15),
-                              ),
-                            )
-                          ],
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 6)),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                  child: GradientLetter(
-                                      word: 'Y',
-                                      width: 43,
-                                      height: 43,
-                                      fontSize: 28,
-                                      outerCircleRadius: 8,
-                                      innerCircleRadius: 4,
-                                      letterHeight: 12 / 15)),
-                            ),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                                onTap: () {
-                                  print('clicked');
-                                },
-                                child: Container(
-                                    child: GradientLetter(
-                                        word: 'C',
-                                        width: 43,
-                                        height: 43,
-                                        fontSize: 28,
-                                        outerCircleRadius: 8,
-                                        innerCircleRadius: 4,
-                                        letterHeight: 12 / 15))),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                child: GradientLetter(
-                                    word: 'B',
-                                    width: 43,
-                                    height: 43,
-                                    fontSize: 28,
-                                    outerCircleRadius: 8,
-                                    innerCircleRadius: 4,
-                                    letterHeight: 12 / 15),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                                onTap: () {
-                                  print('clicked');
-                                },
-                                child: Container(
-                                    child: GradientLetter(
-                                        word: 'K',
-                                        width: 43,
-                                        height: 43,
-                                        fontSize: 28,
-                                        outerCircleRadius: 8,
-                                        innerCircleRadius: 4,
-                                        letterHeight: 12 / 15))),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                child: GradientLetter(
-                                    word: 'N',
-                                    width: 43,
-                                    height: 43,
-                                    fontSize: 28,
-                                    outerCircleRadius: 8,
-                                    innerCircleRadius: 4,
-                                    letterHeight: 12 / 15),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                child: GradientLetter(
-                                    word: 'I',
-                                    width: 43,
-                                    height: 43,
-                                    fontSize: 28,
-                                    outerCircleRadius: 8,
-                                    innerCircleRadius: 4,
-                                    letterHeight: 12 / 15),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(right: 6)),
-                            InkWell(
-                              onTap: () {
-                                print('clicked');
-                              },
-                              child: Container(
-                                child: GradientLetter(
-                                    word: 'E',
-                                    width: 43,
-                                    height: 43,
-                                    fontSize: 28,
-                                    outerCircleRadius: 8,
-                                    innerCircleRadius: 4,
-                                    letterHeight: 12 / 15),
-                              ),
-                            ),
-                          ],
-                        )
+
                       ],
                     ),
                   )

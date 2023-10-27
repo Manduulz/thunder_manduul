@@ -33,37 +33,7 @@ class _StartScreenState extends State<StartScreen> {
               const Padding(padding: EdgeInsets.only(top: 15)),
               InputField(onSubmitted: _createUser),
               const Padding(padding: EdgeInsets.only(top: 10)),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18))),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TaskScreen(
-                          user: newUser,
-                        ),
-                      ));
-                },
-                child: Container(
-                  width: 260,
-                  height: 50,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                  padding: const EdgeInsets.only(top: 10),
-                  child: const Text(
-                    textAlign: TextAlign.center,
-                    'START',
-                    style: TextStyle(
-                        fontFamily: 'Nunito',
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  ),
-                ),
-              )
+              StartButton(newUser)
             ],
           ),
         ),
@@ -143,6 +113,49 @@ class _StartScreenState extends State<StartScreen> {
     if (kDebugMode) {
       print('Creating user: ${newUser.name}');
       print("User's score: ${newUser.point}");
+    }
+  }
+}
+
+class StartButton extends StatelessWidget {
+  const StartButton(User newUser, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    if(newUser.name == 'Guest') {
+      return Container();
+    } else {
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.orange,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18))),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TaskScreen(
+                  user: newUser,
+                ),
+              ));
+        },
+        child: Container(
+          width: 260,
+          height: 50,
+          decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(15)),
+          padding: const EdgeInsets.only(top: 10),
+          child: const Text(
+            textAlign: TextAlign.center,
+            'START',
+            style: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                color: Colors.white),
+          ),
+        ),
+      );
     }
   }
 }

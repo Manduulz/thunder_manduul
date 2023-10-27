@@ -36,15 +36,22 @@ class _InputFieldState extends State<InputField> {
           widget.onSubmitted(value);
         },
         textAlign: TextAlign.start,
+        textCapitalization: TextCapitalization.none,
+        textInputAction: TextInputAction.none,
         controller: _textEditingController,
+        maxLines: 1,
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+          filled: true,
+          fillColor: Colors.white,
           suffixIcon: IconButton(
             onPressed: () {
               _textEditingController.clear();
             },
             icon: Image.asset('assets/images/close 1.png'),
           ),
-          enabledBorder: OutlineInputBorder(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
               borderSide: BorderSide(width: 0, style: BorderStyle.none)),
           labelText: 'Type here',
           labelStyle: TextStyle(color: Colors.orange),
