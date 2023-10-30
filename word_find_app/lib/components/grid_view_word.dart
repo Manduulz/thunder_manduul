@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:word_find_app/components/word_search_widget.dart';
 import 'package:word_find_app/gradient_letter.dart';
+import 'package:word_search_safety/word_search_safety.dart';
 
-class GridViewWidget extends StatelessWidget {
-  final List<String> words = List.generate(14, (index) => "Word $index");
+class GridViewWidget extends StatefulWidget {
+
   GridViewWidget({super.key});
+
+  @override
+  State<GridViewWidget> createState() => _GridViewWidgetState();
+}
+
+class _GridViewWidgetState extends State<GridViewWidget> {
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +27,26 @@ class GridViewWidget extends StatelessWidget {
           mainAxisSpacing: 10
           ),
           padding: EdgeInsets.all(10),
-          itemCount: words.length,
+
+          shrinkWrap: false,
           itemBuilder: (context, index){
-            return Container(
+            return LayoutBuilder (builder: (context, constraints){
+              return Container(
               decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(15)
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(15)
               ),
-              child: Center(
-                child: GradientLetter(word: "A", width: 43, height: 43, fontSize: 25, outerCircleRadius: 8, innerCircleRadius: 4, letterHeight: 12/15),
-              ),
+              child: TextButton(
+                onPressed: () {},
+                child: SizedBox(
+                  width: 40,
+
+                ),
+              )
+
             );
+              },);
+
           }),
     );
   }

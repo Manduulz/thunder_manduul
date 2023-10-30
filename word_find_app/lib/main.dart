@@ -11,7 +11,7 @@ void main() {
     theme: ThemeData(
       fontFamily: 'Nunito',
     ),
-    home: HomeScreen(),)
+    home: TaskScreen(user: newUser))
   );
 }
 

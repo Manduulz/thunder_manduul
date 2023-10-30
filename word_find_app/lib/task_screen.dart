@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:word_find_app/components/grid_view_word.dart';
 import 'package:word_find_app/components/lay_out_builder.dart';
 import 'package:word_find_app/components/word_search_widget.dart';
 import 'package:word_find_app/gradient_letter.dart';
@@ -223,9 +224,10 @@ class _TaskScreenState extends State<TaskScreen> {
                   Padding(padding: EdgeInsets.only(top: 25)),
                   Container(
                     decoration: BoxDecoration(color: Colors.white),
+
                     child: Column(
                       children: [
-
+                        WordSearchGame()
                       ],
                     ),
                   )

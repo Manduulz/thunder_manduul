@@ -1,58 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:word_find_app/gradient_letter.dart';
 import 'package:word_search_safety/word_search_safety.dart';
 
-class WordSearchWidget extends StatelessWidget {
-  const WordSearchWidget({super.key});
+class WordSearchGame extends StatefulWidget {
+  const WordSearchGame({super.key});
 
   @override
-  Widget build (BuildContext context) {
+  State<WordSearchGame> createState() => _WordSearchGameState();
+}
 
+class _WordSearchGameState extends State<WordSearchGame> {
+  final List<String> wordList = ['TOTORO'];
+  final WSSettings settings = WSSettings(
+    width: 7,
+    height: 2,
+    fillBlanks: int,
+    maxAttempts: 5,
+  );
+  final WordSearchSafety wordSearch = WordSearchSafety();
+  WSNewPuzzle? newPuzzle;
 
-//     final List<String> wl = ['hello', 'world', 'foo', 'bar', 'baz', 'dart'];
-//
-//     // Create the puzzle sessting object
-//     final WSSettings ws = WSSettings(
-//       width: 10,
-//       height: 10,
-//       orientations: List.from([
-//         WSOrientation.horizontal,
-//         WSOrientation.vertical,
-//         WSOrientation.diagonal,
-//       ]),
-//     );
-// // Create new instance of the WordSearch class
-//     final WordSearchSafety wordSearch = WordSearchSafety();
-//
-//     // Create a new puzzle
-//     final WSNewPuzzle newPuzzle = wordSearch.newPuzzle(wl, ws);
-//
-//     /// Check if there are errors generated while creating the puzzle
-//     if (newPuzzle.errors!.isEmpty) {
-//       // The puzzle output
-//       print('Puzzle 2D List');
-//       print(newPuzzle.toString());
-//
-//       // Solve puzzle for given word list
-//       final WSSolved solved =
-//       wordSearch.solvePuzzle(newPuzzle.puzzle!, ['dart', 'word']);
-//       // All found words by solving the puzzle
-//       print('Found Words!');
-//       solved.found!.forEach((element) {
-//         print('word: ${element.word}, orientation: ${element.orientation}');
-//         print('x:${element.x}, y:${element.y}');
-//       });
-//
-//       // All words that could not be found
-//       print('Not found Words!');
-//       solved.notFound!.forEach((element) {
-//         print('word: ${element}');
-//       });
-//     } else {
-//       // Notify the user of the errors
-//       newPuzzle.errors!.forEach((error) {
-//         print(error);
-//       });
+  @override
+  void initState() {
+    super.initState();
+    newPuzzle = wordSearch.newPuzzle(wordList, settings);
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    if (newPuzzle!.errors!.isEmpty) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          for (var row in newPuzzle!.puzzle!)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                for (var cell in row)
+                  GradientLetter(
+                    word: cell.toUpperCase(),
+                    width: 40,
+                    height: 40,
+                    fontSize: 26,
+                    outerCircleRadius: 8,
+                    innerCircleRadius: 4,
+                    letterHeight: 15 / 12,
+                  ),
+              ],
+            )
+        ],
+      );
+    }
     return Container();
   }
 }
