@@ -3,20 +3,21 @@ import 'package:word_find_app/components/grid_view_word.dart';
 import 'package:word_find_app/components/lay_out_builder.dart';
 import 'package:word_find_app/components/word_search_widget.dart';
 import 'package:word_find_app/gradient_letter.dart';
+import 'package:word_find_app/home_screen.dart';
 import 'package:word_find_app/model/user_model.dart';
 import 'package:word_find_app/start_screen.dart';
-import 'package:word_find_app/task_screen2.dart';
+import 'package:word_find_app/task_screen.dart';
 
-class TaskScreen extends StatefulWidget {
+class TaskScreen2 extends StatefulWidget {
   final User user;
-  const TaskScreen({super.key, required this.user});
+  const TaskScreen2({super.key, required this.user});
 
 
   @override
-  State<TaskScreen> createState() => _TaskScreenState();
+  State<TaskScreen2> createState() => _TaskScreenState();
 }
 
-class _TaskScreenState extends State<TaskScreen> {
+class _TaskScreenState extends State<TaskScreen2> {
   int points = 0;
   int scorePoint = 0;
   int fullPoint = 10;
@@ -26,7 +27,7 @@ class _TaskScreenState extends State<TaskScreen> {
   @override
   Widget build(BuildContext context) {
 
-      print(widget.user.name);
+    print(widget.user.name);
 
     return Scaffold(
       backgroundColor: Color(0xFFFBF5F2),
@@ -37,7 +38,7 @@ class _TaskScreenState extends State<TaskScreen> {
         leading: IconButton(
           icon: Image.asset('assets/images/exit.png'),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
           },
         ),
         title: Column(
@@ -134,35 +135,17 @@ class _TaskScreenState extends State<TaskScreen> {
                     SizedBox(
                       height: 263,
                       width: 265,
-                      child: Image.asset('assets/images/totoro.jpeg'),
+                      child: Image.asset('assets/images/elsa.png'),
                     ),
                     IconButton(
-                        onPressed: () {Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => TaskScreen2(user: newUser))
-                        );},
+                        onPressed: () {},
                         icon: Image.asset('assets/images/next.png'))
                   ]),
                   Padding(padding: EdgeInsets.only(top: 15)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GradientLetter(
-                          word: '',
-                          width: 43,
-                          height: 43,
-                          fontSize: 25,
-                          outerCircleRadius: 8,
-                          innerCircleRadius: 4,
-                          letterHeight: 12 / 15),
-                      Padding(padding: EdgeInsets.only(right: 6)),
-                      GradientLetter(
-                          word: '',
-                          width: 43,
-                          height: 43,
-                          fontSize: 25,
-                          outerCircleRadius: 8,
-                          innerCircleRadius: 4,
-                          letterHeight: 12 / 15),
+
                       Padding(padding: EdgeInsets.only(right: 6)),
                       GradientLetter(
                           word: '',
@@ -234,7 +217,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     height: 197,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))
                     ),
                     child: WordSearchGame(),
                   )
