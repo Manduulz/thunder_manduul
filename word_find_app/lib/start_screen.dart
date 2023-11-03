@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:word_find_app/components/input_field.dart';
-import 'package:word_find_app/gradient_letter.dart';
+import 'package:word_find_app/components/gradient_letter.dart';
 import 'package:word_find_app/model/user_model.dart';
 import 'package:word_find_app/task_screen.dart';
 

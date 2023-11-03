@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:word_find_app/components/alert_button.dart';
+import 'package:word_find_app/components/alert_dialog.dart';
+import 'package:word_find_app/components/exit_model.dart';
 import 'package:word_find_app/components/grid_view_word.dart';
 import 'package:word_find_app/components/word_search_widget.dart';
 import 'package:word_find_app/start_screen.dart';
@@ -13,7 +14,7 @@ void main() {
     theme: ThemeData(
       fontFamily: 'Nunito',
     ),
-    home: AlertButton())
+    home: HomeScreen())
   );
 }
 

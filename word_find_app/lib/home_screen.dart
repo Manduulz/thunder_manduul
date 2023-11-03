@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:word_find_app/start_screen.dart';
 
-import 'gradient_letter.dart';
+import 'components/gradient_letter.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

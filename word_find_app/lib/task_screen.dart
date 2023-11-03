@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:word_find_app/components/grid_view_word.dart';
 import 'package:word_find_app/components/lay_out_builder.dart';
 import 'package:word_find_app/components/word_search_widget.dart';
-import 'package:word_find_app/gradient_letter.dart';
+import 'package:word_find_app/components/gradient_letter.dart';
 import 'package:word_find_app/model/user_model.dart';
 import 'package:word_find_app/start_screen.dart';
 import 'package:word_find_app/task_screen2.dart';

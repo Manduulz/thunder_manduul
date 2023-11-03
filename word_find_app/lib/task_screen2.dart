@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:word_find_app/components/exit_model.dart';
 import 'package:word_find_app/components/grid_view_word.dart';
 import 'package:word_find_app/components/lay_out_builder.dart';
 import 'package:word_find_app/components/word_search_widget.dart';
-import 'package:word_find_app/gradient_letter.dart';
+import 'package:word_find_app/components/gradient_letter.dart';
 import 'package:word_find_app/home_screen.dart';
 import 'package:word_find_app/model/user_model.dart';
 import 'package:word_find_app/start_screen.dart';
@@ -38,7 +39,7 @@ class _TaskScreenState extends State<TaskScreen2> {
         leading: IconButton(
           icon: Image.asset('assets/images/exit.png'),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ExitModel()));
           },
         ),
         title: Column(
@@ -131,7 +132,7 @@ class _TaskScreenState extends State<TaskScreen2> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: Image.asset('assets/images/previousGray.png')),
+                        icon: Image.asset('assets/images/previous 1.png')),
                     SizedBox(
                       height: 263,
                       width: 265,

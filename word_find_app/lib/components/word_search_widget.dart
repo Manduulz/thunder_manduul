@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:word_find_app/gradient_letter.dart';
+import 'package:word_find_app/components/gradient_letter.dart';
 import 'package:word_search_safety/word_search_safety.dart';
 
 class WordSearchGame extends StatefulWidget {
