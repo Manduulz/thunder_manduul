@@ -220,7 +220,7 @@ class _TaskScreenState extends State<TaskScreen2> {
                         color: Colors.white,
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))
                     ),
-                    child: WordSearchGame(),
+                    // child: WordSearchGame(),
                   )
                 ],
               ),

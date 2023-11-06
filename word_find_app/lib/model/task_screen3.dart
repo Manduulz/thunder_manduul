@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:word_find_app/components/gradient_letter.dart';
 
-class WordSearchGame extends StatelessWidget {
-  const WordSearchGame({super.key});
+class WordSearchGameWord extends StatelessWidget {
+  const WordSearchGameWord({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +20,13 @@ class WordSearchScreen extends StatefulWidget {
 }
 
 class _WordSearchScreenState extends State<WordSearchScreen> {
+  final List<String> words = ['FLUTTER', 'WORD', 'SEARCH', 'GAME'];
   final List<List<String>> grid = [
-    ['W', 'O', 'R', 'D', 'F'],
-    ['L', 'G', 'A', 'M', 'T'],
-    ['U', 'S', 'R', 'K', 'E'],
-    ['T', 'N', 'H', 'C', 'H'],
-    ['F', 'Z', 'E', 'S', 'M'],
+    ['T', 'O', 'R', 'R', 'F', 'O'],
+    ['L', 'G', 'A', 'M', 'T', 'O'],
+
   ];
-  final String hiddenWord = 'HELLO';
+  final String hiddenWord = 'TOTORO';
   String selectedLetter = '';
   List<bool> revealedHiddenWord = [];
 
@@ -38,7 +38,6 @@ class _WordSearchScreenState extends State<WordSearchScreen> {
 
   void onLetterSelected(String letter) {
     setState(() {
-      print('selected letter, $letter');
       selectedLetter = letter;
       updateHiddenWordGrid();
     });
@@ -62,6 +61,20 @@ class _WordSearchScreenState extends State<WordSearchScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(hiddenWord.length, (index) {
+                if(revealedHiddenWord[index]) {
+                  return Container(
+                    child: GradientLetter(word: hiddenWord[index], width: 43, height: 43, fontSize: 25, outerCircleRadius: 8, innerCircleRadius: 4, letterHeight: 12/15),
+                  );
+                } else {
+                  return Container(
+                    child: GradientLetter(word: '', width: 43, height: 43, fontSize: 25, outerCircleRadius: 8, innerCircleRadius: 4, letterHeight: 12/15),
+                  );
+                }
+              }),
+            ),
             Expanded(
                 child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -78,55 +91,14 @@ class _WordSearchScreenState extends State<WordSearchScreen> {
                           onLetterSelected(letter);
                         },
                         child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(),
-                            color: selectedLetter == letter ? Colors.blue : null,
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            letter,
-                            style: TextStyle(
-                              color: selectedLetter == letter
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                          ),
+                         child: GradientLetter(word: letter, width: 43, height: 43, fontSize: 25, outerCircleRadius: 8, innerCircleRadius: 4, letterHeight: 12/15),
                         ),
                       );
                     }
                 )),
-            SizedBox(height: 20),
-            Text('Selected Letter: $selectedLetter'),
-            SizedBox(height: 20),
-            Text('Hidden Word Grid:'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(hiddenWord.length, (index) {
-                if(revealedHiddenWord[index]) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      color: Colors.blue,
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      hiddenWord[index],
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  );
-                } else {
-                  return Container(
-                    decoration: BoxDecoration(border: Border.all()),
-                    alignment: Alignment.center,
-                    child: Text(' '),
-                  );
-                }
-              }),
-            )
           ],
         ),
       ),
     );
   }
 }
-

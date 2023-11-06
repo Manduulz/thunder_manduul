@@ -32,11 +32,13 @@ class GradientLetter extends StatelessWidget {
       child: Align(
         alignment: Alignment.center,
         child: FractionallySizedBox(
+          widthFactor: 4/5,
+          heightFactor: 4/5,
           child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(innerCircleRadius),
                 gradient: const LinearGradient(
-                    colors: [Color.fromRGBO(255, 144, 2, 0), Color(0xFFE48000)],
+                    colors: [Color.fromRGBO(255, 164, 2, 0), Color(0xFFE48000)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     stops: [-0.025, 1.6875],

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:word_find_app/components/grid_view_word.dart';
-import 'package:word_find_app/components/lay_out_builder.dart';
 import 'package:word_find_app/components/word_search_widget.dart';
 import 'package:word_find_app/components/gradient_letter.dart';
 import 'package:word_find_app/model/user_model.dart';
@@ -11,7 +9,6 @@ class TaskScreen extends StatefulWidget {
   final User user;
   const TaskScreen({super.key, required this.user});
 
-
   @override
   State<TaskScreen> createState() => _TaskScreenState();
 }
@@ -20,13 +17,38 @@ class _TaskScreenState extends State<TaskScreen> {
   int points = 0;
   int scorePoint = 0;
   int fullPoint = 10;
+  List<Widget> hiddenWordGradient = [];
+  final String hiddenWord = 'TOTORO';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
+    hiddenWordGradient = List.generate(
+        hiddenWord.length,
+            (index) => Row(
+          children: [
+            GradientLetter(
+                word: '',
+                width: 43,
+                height: 43,
+                fontSize: 25,
+                outerCircleRadius: 8,
+                innerCircleRadius: 4,
+                letterHeight: 12 / 15),
+            Padding(padding: EdgeInsets.only(right: 6)),
+          ],
+        ));
+
+  }
 
 
 
   @override
   Widget build(BuildContext context) {
-
-      print(widget.user.name);
+    print(widget.user.name);
 
     return Scaffold(
       backgroundColor: Color(0xFFFBF5F2),
@@ -137,69 +159,19 @@ class _TaskScreenState extends State<TaskScreen> {
                       child: Image.asset('assets/images/totoro.jpeg'),
                     ),
                     IconButton(
-                        onPressed: () {Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => TaskScreen2(user: newUser))
-                        );},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      TaskScreen2(user: newUser)));
+                        },
                         icon: Image.asset('assets/images/next.png'))
                   ]),
                   Padding(padding: EdgeInsets.only(top: 15)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GradientLetter(
-                          word: '',
-                          width: 43,
-                          height: 43,
-                          fontSize: 25,
-                          outerCircleRadius: 8,
-                          innerCircleRadius: 4,
-                          letterHeight: 12 / 15),
-                      Padding(padding: EdgeInsets.only(right: 6)),
-                      GradientLetter(
-                          word: '',
-                          width: 43,
-                          height: 43,
-                          fontSize: 25,
-                          outerCircleRadius: 8,
-                          innerCircleRadius: 4,
-                          letterHeight: 12 / 15),
-                      Padding(padding: EdgeInsets.only(right: 6)),
-                      GradientLetter(
-                          word: '',
-                          width: 43,
-                          height: 43,
-                          fontSize: 25,
-                          outerCircleRadius: 8,
-                          innerCircleRadius: 4,
-                          letterHeight: 12 / 15),
-                      Padding(padding: EdgeInsets.only(right: 6)),
-                      GradientLetter(
-                          word: '',
-                          width: 43,
-                          height: 43,
-                          fontSize: 25,
-                          outerCircleRadius: 8,
-                          innerCircleRadius: 4,
-                          letterHeight: 12 / 15),
-                      Padding(padding: EdgeInsets.only(right: 6)),
-                      GradientLetter(
-                          word: '',
-                          width: 43,
-                          height: 43,
-                          fontSize: 25,
-                          outerCircleRadius: 8,
-                          innerCircleRadius: 4,
-                          letterHeight: 12 / 15),
-                      Padding(padding: EdgeInsets.only(right: 6)),
-                      GradientLetter(
-                          word: '',
-                          width: 43,
-                          height: 43,
-                          fontSize: 25,
-                          outerCircleRadius: 8,
-                          innerCircleRadius: 4,
-                          letterHeight: 12 / 15),
-                    ],
+                    children: hiddenWordGradient,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -227,16 +199,15 @@ class _TaskScreenState extends State<TaskScreen> {
                     ],
                   ),
                   Padding(padding: EdgeInsets.only(top: 95)),
-
                   Container(
-
                     width: 405,
                     height: 197,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))
-                    ),
-                    child: WordSearchGame(),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15))),
+                    child: WordSearchGame(hiddenWord),
                   )
                 ],
               ),
