@@ -3,6 +3,7 @@ import 'package:word_find_app/components/word_search_widget.dart';
 import 'package:word_find_app/components/gradient_letter.dart';
 import 'package:word_find_app/model/user_model.dart';
 import 'package:word_find_app/start_screen.dart';
+import 'package:word_search_safety/word_search_safety.dart';
 import 'package:word_find_app/task_screen2.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -18,33 +19,35 @@ class _TaskScreenState extends State<TaskScreen> {
   int scorePoint = 0;
   int fullPoint = 10;
   List<Widget> hiddenWordGradient = [];
+  List<bool> revealedHiddenWord = [];
+  final List<String> wordList = ['T', 'O', 'T', 'O', 'R', 'O'];
+  final WordSearchSafety wordSearch = WordSearchSafety();
+  late Widget hiddenInput;
+  WSNewPuzzle? newPuzzle;
+  WSSolved? solved;
+
+
   final String hiddenWord = 'TOTORO';
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-
-    hiddenWordGradient = List.generate(
-        hiddenWord.length,
-            (index) => Row(
-          children: [
-            GradientLetter(
-                word: '',
-                width: 43,
-                height: 43,
-                fontSize: 25,
-                outerCircleRadius: 8,
-                innerCircleRadius: 4,
-                letterHeight: 12 / 15),
-            Padding(padding: EdgeInsets.only(right: 6)),
-          ],
-        ));
-
+    revealedHiddenWord = List.filled(wordList.length, false);
   }
 
+  void onLetterSelected(String letter) {
+    setState(() {
+      updateHiddenWordGrid(letter);
+    });
+  }
 
+  void updateHiddenWordGrid(letter) {
+    for (int i = 0; i < hiddenWord.length; i++) {
+      if(hiddenWord[i] == letter){
+        revealedHiddenWord[i] = true;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +174,27 @@ class _TaskScreenState extends State<TaskScreen> {
                   Padding(padding: EdgeInsets.only(top: 15)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: hiddenWordGradient,
+                    children: List.generate(hiddenWord.length, (index) {
+                      if (revealedHiddenWord[index]) {
+                        return GradientLetter(
+                            word: hiddenWord[index],
+                            width: 43,
+                            height: 43,
+                            fontSize: 25,
+                            outerCircleRadius: 8,
+                            innerCircleRadius: 4,
+                            letterHeight: 12 / 15);
+                      } else {
+                        return const GradientLetter(
+                            word: '',
+                            width: 43,
+                            height: 43,
+                            fontSize: 25,
+                            outerCircleRadius: 8,
+                            innerCircleRadius: 4,
+                            letterHeight: 12 / 15);
+                      }
+                    }),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -198,17 +221,25 @@ class _TaskScreenState extends State<TaskScreen> {
                           ))
                     ],
                   ),
-                  Padding(padding: EdgeInsets.only(top: 95)),
+                  // Padding(padding: EdgeInsets.only(top: 45)),
                   Container(
-                    width: 405,
-                    height: 197,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15),
                             topRight: Radius.circular(15))),
-                    child: WordSearchGame(hiddenWord),
-                  )
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 297,
+                          child: WordSearchGame(hiddenWord, onLetterSelected),
+                        ),
+
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

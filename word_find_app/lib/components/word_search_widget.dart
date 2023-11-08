@@ -4,45 +4,41 @@ import 'package:word_search_safety/word_search_safety.dart';
 
 class WordSearchGame extends StatefulWidget {
   final String hiddenWord;
-  const WordSearchGame(this.hiddenWord, {super.key});
+  final Function onLetterSelected;
+  const WordSearchGame(this.hiddenWord,this.onLetterSelected, {super.key});
 
   @override
   State<WordSearchGame> createState() => _WordSearchGameState();
 }
 
 class _WordSearchGameState extends State<WordSearchGame> {
-  final List<String> wordList = ['TOTORO', 'ELSA'];
   final WSSettings settings = WSSettings(
-    width: 7,
-    height: 2,
-    maxAttempts: 5,
+      width: 7,
+      height: 2,
+      maxAttempts: 5,
+      orientations: List.from([
+        WSOrientation.horizontal,
+      ])
   );
+  List<bool> revealedHiddenWord = [];
+  final List<String> wordList = ['T', 'O', 'T', 'O', 'R', 'O'];
   final WordSearchSafety wordSearch = WordSearchSafety();
   WSNewPuzzle? newPuzzle;
-  String selectedLetter = '';
-  List<bool> revealedHiddenWord = [];
+  WSSolved? solved;
+
 
   @override
   void initState() {
     super.initState();
-    newPuzzle = wordSearch.newPuzzle(wordList, settings);
     revealedHiddenWord = List.filled(widget.hiddenWord.length, false);
-  }
-
-  void onLetterSelected(String letter) {
-    setState(() {
-      selectedLetter = letter;
-      updateHiddenWordGrid();
-    });
-  }
-
-  void updateHiddenWordGrid() {
-    for (int i = 0; i < widget.hiddenWord.length; i++) {
-      if(widget.hiddenWord[i] == selectedLetter){
-        revealedHiddenWord[i] = true;
-      }
+    newPuzzle = wordSearch.newPuzzle(wordList, settings);
+    if(newPuzzle!.errors!.isEmpty) {
+      solved = wordSearch.solvePuzzle(newPuzzle!.puzzle!,
+      ['T', 'O', 'T', 'O', 'R', 'O']);
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +47,7 @@ class _WordSearchGameState extends State<WordSearchGame> {
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              height: 197,
+              height: 110,
               width: 375,
               child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -67,7 +63,8 @@ class _WordSearchGameState extends State<WordSearchGame> {
                     final cell = newPuzzle!.puzzle![row][col];
                     return InkWell(
                       onTap: (){
-                        print(cell);
+                        widget.onLetterSelected(cell);
+                        print('on letter selected $cell');
                       },
                       child: Column(
                         children: [
@@ -86,12 +83,18 @@ class _WordSearchGameState extends State<WordSearchGame> {
                               fontSize: 26,
                               outerCircleRadius: 8,
                               innerCircleRadius: 4,
-                              letterHeight: 12 / 15)
+                              letterHeight: 12 / 15),
                         ],
                       ),
                     );
                   }),
             ),
+            SizedBox(
+                child:
+                ElevatedButton(
+                    onPressed: (){},
+                    child: Text('abc')),
+            )
           ]);
     } else {
       return Container();
