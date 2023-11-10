@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:word_find_app/components/exit_model.dart';
+import 'package:word_find_app/components/winner.dart';
 import 'package:word_find_app/components/word_search_widget.dart';
 import 'package:word_find_app/components/gradient_letter.dart';
+import 'package:word_find_app/home_screen.dart';
 import 'package:word_find_app/model/user_model.dart';
+import 'package:word_find_app/repository/word_list_repository.dart';
 import 'package:word_find_app/start_screen.dart';
 import 'package:word_search_safety/word_search_safety.dart';
-import 'package:word_find_app/task_screen2.dart';
+
+import 'model/game_state.dart';
 
 class TaskScreen extends StatefulWidget {
   final User user;
+
   const TaskScreen({super.key, required this.user});
 
   @override
@@ -18,21 +24,45 @@ class _TaskScreenState extends State<TaskScreen> {
   int points = 0;
   int scorePoint = 0;
   int fullPoint = 10;
+
   List<Widget> hiddenWordGradient = [];
   List<bool> revealedHiddenWord = [];
-  final List<String> wordList = ['T', 'O', 'T', 'O', 'R', 'O'];
+
   final WordSearchSafety wordSearch = WordSearchSafety();
   late Widget hiddenInput;
   WSNewPuzzle? newPuzzle;
   WSSolved? solved;
+  late GameState gameState;
+  int currentIndex = 0;
+  bool isWon = false;
+  int howManyGuessed = 0;
+  late List<String> hiddenWord = [];
 
-
-  final String hiddenWord = 'TOTORO';
+  final WSSettings settings = WSSettings(
+      width: 7,
+      height: 2,
+      maxAttempts: 5,
+      orientations: List.from([
+        WSOrientation.horizontal,
+      ]));
 
   @override
   void initState() {
     super.initState();
-    revealedHiddenWord = List.filled(wordList.length, false);
+    revealedHiddenWord = List.filled(hiddenWord.length, false);
+    final WordListRepository wordListRepository = WordListRepository();
+    gameState = GameState(
+        currentModel: wordListRepository.search_words[currentIndex],
+        currentModelIndex: currentIndex,
+        isWon: isWon,
+        howManyGuessed: howManyGuessed);
+    hiddenWord = gameState.currentModel.hiddenWord;
+    revealedHiddenWord = List.filled(hiddenWord.length, false);
+    newPuzzle = wordSearch.newPuzzle(hiddenWord, settings);
+    if (newPuzzle!.errors!.isEmpty) {
+      solved = wordSearch.solvePuzzle(
+          newPuzzle!.puzzle!, gameState.currentModel.hiddenWord);
+    }
   }
 
   void onLetterSelected(String letter) {
@@ -42,9 +72,29 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   void updateHiddenWordGrid(letter) {
+    print('updateHiddenWordGrid: $letter');
     for (int i = 0; i < hiddenWord.length; i++) {
-      if(hiddenWord[i] == letter){
+      if (hiddenWord[i] == letter) {
         revealedHiddenWord[i] = true;
+      }
+    }
+    if (revealedHiddenWord.every((element) => element == true)) {
+      print('You Won !');
+      isWon = true;
+      if (isWon) {
+        if (WordListRepository().search_words.length - 1 ==
+            gameState.currentModelIndex) {
+          print('You won the Game !');
+          Navigator.push(context, MaterialPageRoute(builder: (context) => WinnerModel()));
+          return;
+        }
+        gameState.currentModelIndex++;
+        gameState.currentModel =
+            WordListRepository().search_words[gameState.currentModelIndex];
+        hiddenWord = gameState.currentModel.hiddenWord;
+        revealedHiddenWord = List.filled(hiddenWord.length, false);
+        isWon = false;
+        newPuzzle = wordSearch.newPuzzle(hiddenWord, settings);
       }
     }
   }
@@ -62,7 +112,7 @@ class _TaskScreenState extends State<TaskScreen> {
         leading: IconButton(
           icon: Image.asset('assets/images/exit.png'),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ExitModel()));
           },
         ),
         title: Column(
@@ -159,15 +209,14 @@ class _TaskScreenState extends State<TaskScreen> {
                     SizedBox(
                       height: 263,
                       width: 265,
-                      child: Image.asset('assets/images/totoro.jpeg'),
+                      child: Image.asset(gameState.currentModel.imageURL),
                     ),
                     IconButton(
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      TaskScreen2(user: newUser)));
+                                  builder: (context) => HomeScreen()));
                         },
                         icon: Image.asset('assets/images/next.png'))
                   ]),
@@ -221,7 +270,7 @@ class _TaskScreenState extends State<TaskScreen> {
                           ))
                     ],
                   ),
-                  // Padding(padding: EdgeInsets.only(top: 45)),
+                  Padding(padding: EdgeInsets.only(top: 75)),
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -234,9 +283,14 @@ class _TaskScreenState extends State<TaskScreen> {
                         Container(
                           width: double.infinity,
                           height: 297,
-                          child: WordSearchGame(hiddenWord, onLetterSelected),
+                          child: WordSearchGame(
+                            hiddenWord: hiddenWord,
+                            settings: settings,
+                            solved: solved,
+                            newPuzzle: newPuzzle,
+                            onLetterSelected: onLetterSelected,
+                          ),
                         ),
-
                       ],
                     ),
                   ),
