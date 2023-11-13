@@ -5,12 +5,14 @@ import 'package:word_search_safety/word_search_safety.dart';
 class WordSearchGame extends StatefulWidget {
   final List<String> hiddenWord;
   final Function onLetterSelected;
+  final Function changeState;
   final WSNewPuzzle? newPuzzle;
   final WSSolved? solved;
   final WSSettings settings;
 
   const WordSearchGame(
       {required this.solved,
+        required this.changeState,
       required this.newPuzzle,
       required this.settings,
       required this.hiddenWord,
@@ -87,7 +89,9 @@ class _WordSearchGameState extends State<WordSearchGame> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
 
-                  IconButton(onPressed: (){}, icon: Image.asset('assets/images/reload.png')),
+                  IconButton(onPressed: (){
+                    widget.changeState();
+                  }, icon: Image.asset('assets/images/reload.png')),
 
                   Text(
                     'abc',

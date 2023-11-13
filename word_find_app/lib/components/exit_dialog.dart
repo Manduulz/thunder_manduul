@@ -1,15 +1,14 @@
-
 import 'package:flutter/material.dart';
-
-import '../home_screen.dart';
-import '../start_screen.dart';
-import '../task_screen.dart';
+import 'package:word_find_app/start_screen.dart';
+import 'package:word_find_app/task_screen.dart';
 import 'gradient_text.dart';
+import 'gradient_letter.dart';
 
-class WinnerDialogWidget extends StatefulWidget {
-  void showWinnerDialog(BuildContext context) {
+class AlertDialogWidget extends StatefulWidget {
+  
+  void showAlertDialog(BuildContext context) {
     showDialog(
-        context: context,
+        context: context, 
         builder: (BuildContext context) {
           return AlertDialog(
             insetPadding: EdgeInsets.all(30),
@@ -46,7 +45,7 @@ class WinnerDialogWidget extends StatefulWidget {
                                   style: TextButton.styleFrom(
                                       padding: EdgeInsets.all(0)),
                                   onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+
                                   },
                                   child: Image.asset('assets/images/exit1.png')),
                             ),
@@ -59,28 +58,28 @@ class WinnerDialogWidget extends StatefulWidget {
                   SizedBox(
                       width: 230,
                       height: 61,
-                      child: GradientText(
-                          'WINNER!', 'Ribeye', 24, 0.1661, 0.961, false)),
+                      child: GradientText('ARE YOU SURE TO QUIT ?', 'Ribeye', 24,
+                          0.1661, 0.961, false)),
                 ],
               ),
             ),
             actions: [
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
+                      backgroundColor: Colors.grey,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)))),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => TaskScreen(user: newUser)));
+
                   },
                   child: Container(
-                    width: 250,
+                    width: 94,
                     height: 45,
                     decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(25)),
                     padding: EdgeInsets.only(top: 8),
                     child: Text(
-                      'Play again',
+                      'Yes',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20,
@@ -90,22 +89,48 @@ class WinnerDialogWidget extends StatefulWidget {
                       ),
                     ),
                   )),
-              Padding(padding: EdgeInsets.only(left: 14))
+              Padding(padding: EdgeInsets.only(right: 20)),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)))),
+                  onPressed: () {
+
+                  },
+                  child: Container(
+                    width: 94,
+                    height: 45,
+                    decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(25)),
+                    padding: EdgeInsets.only(top: 8),
+                    child: Text(
+                      'No',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )),
+              Padding(padding: EdgeInsets.only(right: 18))
             ],
           );
         }
     );
   }
-  const WinnerDialogWidget({super.key});
+
+  const AlertDialogWidget({super.key});
 
   @override
-  State<WinnerDialogWidget> createState() => _WinnerDialogWidgetState();
+  State<AlertDialogWidget> createState() => _AlertDialogWidgetState();
 }
 
-class _WinnerDialogWidgetState extends State<WinnerDialogWidget> {
+class _AlertDialogWidgetState extends State<AlertDialogWidget> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return TaskScreen(user: newUser);
   }
 }
-

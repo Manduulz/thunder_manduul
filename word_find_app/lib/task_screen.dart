@@ -1,6 +1,6 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
-import 'package:word_find_app/components/exit_model.dart';
-import 'package:word_find_app/components/winner.dart';
 import 'package:word_find_app/components/word_search_widget.dart';
 import 'package:word_find_app/components/gradient_letter.dart';
 import 'package:word_find_app/home_screen.dart';
@@ -9,6 +9,7 @@ import 'package:word_find_app/repository/word_list_repository.dart';
 import 'package:word_find_app/start_screen.dart';
 import 'package:word_search_safety/word_search_safety.dart';
 
+import 'components/gradient_text.dart';
 import 'model/game_state.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -44,6 +45,7 @@ class _TaskScreenState extends State<TaskScreen> {
       maxAttempts: 5,
       orientations: List.from([
         WSOrientation.horizontal,
+        WSOrientation.diagonal
       ]));
 
   @override
@@ -65,6 +67,18 @@ class _TaskScreenState extends State<TaskScreen> {
     }
   }
 
+  handleScore() {
+    setState(() {
+      points++;
+    });
+  }
+
+  page() {
+    setState(() {
+      scorePoint++;
+    });
+  }
+
   void onLetterSelected(String letter) {
     setState(() {
       updateHiddenWordGrid(letter);
@@ -81,22 +95,39 @@ class _TaskScreenState extends State<TaskScreen> {
     if (revealedHiddenWord.every((element) => element == true)) {
       print('You Won !');
       isWon = true;
-      if (isWon) {
-        if (WordListRepository().search_words.length - 1 ==
-            gameState.currentModelIndex) {
-          print('You won the Game !');
-          Navigator.push(context, MaterialPageRoute(builder: (context) => WinnerModel()));
-          return;
-        }
-        gameState.currentModelIndex++;
-        gameState.currentModel =
-            WordListRepository().search_words[gameState.currentModelIndex];
-        hiddenWord = gameState.currentModel.hiddenWord;
-        revealedHiddenWord = List.filled(hiddenWord.length, false);
-        isWon = false;
-        newPuzzle = wordSearch.newPuzzle(hiddenWord, settings);
+      _changeState('Next');
+    }
+  }
+
+  void _changeState(String state) {
+    if (isWon) {
+      page();
+      handleScore();
+      if (WordListRepository().search_words.length - 1 == currentIndex) {
+        print('You won the Game !');
+        showWinnerDialog(context);
       }
     }
+    if (state == 'Prev') {
+      currentIndex--;
+    } else if (state == 'Next') {
+      currentIndex++;
+    } else {
+      currentIndex;
+    }
+    print('current index $currentIndex');
+    gameState.currentModel = WordListRepository().search_words[currentIndex];
+    hiddenWord = gameState.currentModel.hiddenWord;
+    revealedHiddenWord = List.filled(hiddenWord.length, false);
+    isWon = false;
+    newPuzzle = wordSearch.newPuzzle(hiddenWord, settings);
+  }
+
+  void resetState() {
+    print('reset state');
+    setState(() {
+      _changeState('reset');
+    });
   }
 
   @override
@@ -112,7 +143,9 @@ class _TaskScreenState extends State<TaskScreen> {
         leading: IconButton(
           icon: Image.asset('assets/images/exit.png'),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ExitModel()));
+            // Navigator.push(
+            //     context, MaterialPageRoute(builder: (context) => ExitModel()));
+            showAlertDialog(context);
           },
         ),
         title: Column(
@@ -203,7 +236,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => TaskScreen(user: newUser)));
                         },
                         icon: Image.asset('assets/images/previousGray.png')),
                     SizedBox(
@@ -213,10 +246,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     ),
                     IconButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()));
+
                         },
                         icon: Image.asset('assets/images/next.png'))
                   ]),
@@ -245,6 +275,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       }
                     }),
                   ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -289,6 +320,7 @@ class _TaskScreenState extends State<TaskScreen> {
                             solved: solved,
                             newPuzzle: newPuzzle,
                             onLetterSelected: onLetterSelected,
+                            changeState: resetState,
                           ),
                         ),
                       ],
@@ -300,6 +332,212 @@ class _TaskScreenState extends State<TaskScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void showWinnerDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            insetPadding: EdgeInsets.all(30),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30))),
+            content: SizedBox(
+              width: 332,
+              height: 126,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Column(
+                        children: [
+                          Padding(padding: EdgeInsets.only(top: 4)),
+                          SizedBox(
+                              width: 45,
+                              height: 45,
+                              child: Image.asset('assets/images/orange.png')),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.only(left: 100)),
+                      SizedBox(
+                        height: 24,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: 24,
+                              child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      padding: EdgeInsets.all(0)),
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                                  },
+                                  child: Image.asset('assets/images/exit1.png')),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 16)),
+                  SizedBox(
+                      width: 230,
+                      height: 61,
+                      child: GradientText(
+                          'WINNER!', 'Ribeye', 24, 0.1661, 0.961, false)),
+                ],
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)))),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => TaskScreen(user: newUser)));
+                  },
+                  child: Container(
+                    width: 250,
+                    height: 45,
+                    decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(25)),
+                    padding: EdgeInsets.only(top: 8),
+                    child: Text(
+                      'Play again',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )),
+              Padding(padding: EdgeInsets.only(left: 14))
+            ],
+          );
+        }
+    );
+  }
+
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            insetPadding: EdgeInsets.all(30),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30))),
+            content: SizedBox(
+              width: 332,
+              height: 126,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Column(
+                        children: [
+                          Padding(padding: EdgeInsets.only(top: 4)),
+                          SizedBox(
+                              width: 45,
+                              height: 45,
+                              child: Image.asset('assets/images/orange.png')),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.only(left: 100)),
+                      SizedBox(
+                        height: 24,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: 24,
+                              child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      padding: EdgeInsets.all(0)),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Image.asset('assets/images/exit1.png')),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 16)),
+                  SizedBox(
+                      width: 230,
+                      height: 61,
+                      child: GradientText('ARE YOU SURE TO QUIT ?', 'Ribeye', 24,
+                          0.1661, 0.961, false)),
+                ],
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)))),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                  },
+                  child: Container(
+                    width: 94,
+                    height: 45,
+                    decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(25)),
+                    padding: EdgeInsets.only(top: 8),
+                    child: Text(
+                      'Yes',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )),
+              Padding(padding: EdgeInsets.only(right: 20)),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)))),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 94,
+                    height: 45,
+                    decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(25)),
+                    padding: EdgeInsets.only(top: 8),
+                    child: Text(
+                      'No',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Nunito',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )),
+              Padding(padding: EdgeInsets.only(right: 18))
+            ],
+          );
+        }
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:word_find_app/components/alert_dialog.dart';
-import 'package:word_find_app/components/exit_model.dart';
+import 'package:word_find_app/components/exit_dialog.dart';
 import 'package:word_find_app/components/grid_view_word.dart';
 import 'package:word_find_app/components/winner.dart';
 import 'package:word_find_app/components/word_search_widget.dart';
