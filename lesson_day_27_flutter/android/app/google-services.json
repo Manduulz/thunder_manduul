@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1014533491817",
+    "project_id": "lessons-day-thunderz",
+    "storage_bucket": "lessons-day-thunderz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014533491817:android:9b30ec0157398880fea6f8",
+        "android_client_info": {
+          "package_name": "com.example.lesson_day_27_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCKQboORYt-KBQzMJBafdrppPhkAGN-qc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
