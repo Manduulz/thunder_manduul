@@ -93,7 +93,7 @@ class AddPostScreen extends StatelessWidget {
                 ],
               ),
             ),
-            
+
           ],
         ),
       ),
