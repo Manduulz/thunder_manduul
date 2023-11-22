@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "581613992527",
+    "project_id": "lesson-day-29-flutter-manduul",
+    "storage_bucket": "lesson-day-29-flutter-manduul.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581613992527:android:e9dc16d8c0ac2edabe083a",
+        "android_client_info": {
+          "package_name": "com.example.lesson_day_29_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBJv6R2eqiC0x5wZ_2JN16K1ditwUQpKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
