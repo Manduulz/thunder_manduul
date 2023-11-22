@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:icodegram/auth_methods.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -8,12 +9,23 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController _controller = TextEditingController();
-  final TextEditingController _editingController = TextEditingController();
-  final TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _rePasswordController = TextEditingController();
   String? _name;
   int? _password;
   int? _phoneNumber;
+
+  @override
+  void dispose() {
+    super.dispose();
+    _phoneController.dispose();
+    _nameController.dispose();
+    _passwordController.dispose();
+    _rePasswordController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'iCodegram',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -39,17 +51,17 @@ class _RegisterPageState extends State<RegisterPage> {
                             fontFamily: 'Lobster',
                             fontWeight: FontWeight.w400),
                       ),
-                      SizedBox(height: 40,),
+                      const SizedBox(height: 40,),
                       Padding(padding: EdgeInsets.all(8),
                       child: TextField(
-                        controller: _controller,
+                        controller: _phoneController,
                         style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             filled: true,
                             fillColor: Colors.white10,
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.grey)),
-                            hintText: 'Утасны дугаар',
+                            hintText: 'E-Mail хаягаа оруулна уу',
                             hintStyle: TextStyle(color: Colors.white),
                         ),
                         keyboardType: TextInputType.number,
@@ -62,9 +74,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       Padding(padding: EdgeInsets.all(8),
                         child: TextField(
-                          controller: _editingController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
+                          controller: _nameController,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
                               filled: true,
                               fillColor: Colors.white10,
                               enabledBorder: OutlineInputBorder(
@@ -82,9 +94,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       Padding(padding: EdgeInsets.all(8),
                         child: TextField(
                           obscureText: true,
-                          controller: _textEditingController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
+                          controller: _passwordController,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
                               filled: true,
                               fillColor: Colors.white10,
                               enabledBorder: OutlineInputBorder(
@@ -101,9 +113,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       Padding(padding: EdgeInsets.all(8),
                         child: TextField(
                           obscureText: true,
-                          controller: _textEditingController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
+                          controller: _rePasswordController,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
                               filled: true,
                               fillColor: Colors.white10,
                               enabledBorder: OutlineInputBorder(
@@ -121,13 +133,19 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               ElevatedButton(
                   style:
                   ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-                  onPressed: () {},
+                  onPressed: () {
+                    AuthMethods().signUpUser(
+                        phonenumber: _phoneController.text,
+                        password: _passwordController.text,
+                        username: _nameController.text,
+                    );
+                  },
                   child: Container(
                     padding: EdgeInsets.only(top: 12),
                     width: 350,
@@ -142,8 +160,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           fontWeight: FontWeight.w400),
                     ),
                   )),
-              Padding(padding: EdgeInsets.only(top: 18)),
-              Text(
+              const Padding(padding: EdgeInsets.only(top: 18)),
+              const Text(
                 'Эсвэл',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -156,7 +174,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Бүртгэлтэй юу ?',
                     style: TextStyle(
                         color: Colors.white,
@@ -168,7 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Нэвтрэх',
+                      child: const Text('Нэвтрэх',
                           style: TextStyle(
                               color: Colors.orange,
                               fontSize: 15,

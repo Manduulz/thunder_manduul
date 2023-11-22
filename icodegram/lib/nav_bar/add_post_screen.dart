@@ -2,7 +2,10 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 class AddPostScreen extends StatelessWidget {
-  const AddPostScreen({super.key});
+  final TextEditingController _photoDetailEditor = TextEditingController();
+  final photoDetail;
+  AddPostScreen({super.key, this.photoDetail});
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +96,23 @@ class AddPostScreen extends StatelessWidget {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: TextField(
+                controller: _photoDetailEditor,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)
+                  ),
+                  hintText: 'Энд бичнэ үү',
+                  hintStyle: TextStyle(color: Colors.white)
+                ),
 
+              ),
+            )
           ],
         ),
       ),

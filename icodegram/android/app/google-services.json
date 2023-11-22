@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "231461584653",
+    "project_id": "i-codegram-z",
+    "storage_bucket": "i-codegram-z.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231461584653:android:d766898e97598db3333a44",
+        "android_client_info": {
+          "package_name": "com.example.icodegram"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkZu6I3_lOSLXbwZ74HQi-2JJBRnDUQBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
