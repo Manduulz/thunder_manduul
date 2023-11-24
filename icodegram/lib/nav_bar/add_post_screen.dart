@@ -41,6 +41,11 @@ class AddPostScreen extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 height: 160,
+                decoration: BoxDecoration(
+                  color: Colors.orange.withAlpha(30),
+                  borderRadius: BorderRadius.circular(34)
+                ),
+                margin: EdgeInsets.all(8),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: DottedBorder(
@@ -98,19 +103,24 @@ class AddPostScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(12.0),
-              child: TextField(
-                controller: _photoDetailEditor,
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey)
+              child: Container(
+                height: 90,
+                color: Colors.grey.withAlpha(40),
+                child: TextField(
+                  maxLines: 5,
+                  controller: _photoDetailEditor,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    filled: true,
+                    // fillColor: Colors.grey,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)
+                    ),
+                    hintText: 'Энд бичнэ үү',
+                    hintStyle: TextStyle(color: Colors.white)
                   ),
-                  hintText: 'Энд бичнэ үү',
-                  hintStyle: TextStyle(color: Colors.white)
-                ),
 
+                ),
               ),
             )
           ],

@@ -11,6 +11,6 @@ void main () async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MaterialApp(
-    home: ScreenLayout(),
+    home: LoginPage(),
   ));
 }

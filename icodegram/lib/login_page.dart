@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:icodegram/auth_methods.dart';
 import 'package:icodegram/model/user_model.dart';
+import 'package:icodegram/nav_bar/screen_layout.dart';
 import 'package:icodegram/register_page.dart';
 
 User newUser = User('Guest', 1234, 99999999);
@@ -54,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                                 fillColor: Colors.white10,
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey)),
-                                hintText: 'Нэвтрэх нэр',
+                                hintText: 'Нэвтрэх нэр (E-Mail)',
                                 hintStyle: TextStyle(color: Colors.white)),
                             onChanged: (value) {
                               setState(() {
@@ -93,7 +95,26 @@ class _LoginPageState extends State<LoginPage> {
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.orange),
                   // onPressed: 1 == 1 ? null : (){},
-                  onPressed: _password == null && _name == null ? null : (){},
+                  onPressed: _password == null && _name == null ? null : () async {
+                    String result = await AuthMethods().loginUser(email: _nameController.text, password: _passwordController.text);
+                    if (result == 'success') {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenLayout()));
+                    } else {
+                      final snackBar = SnackBar(
+                        content: const Text('Login Failed Try Again unlucku guy min'),
+                        action: SnackBarAction(
+                          label: 'Undo',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      );
+
+                      // Find the ScaffoldMessenger in the widget tree
+                      // and use it to show a SnackBar.
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                  },
                   child: Container(
                     padding: EdgeInsets.only(top: 12),
                     width: 350,
