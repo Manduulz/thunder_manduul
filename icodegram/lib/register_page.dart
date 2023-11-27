@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:icodegram/auth_methods.dart';
 
@@ -9,7 +11,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _rePasswordController = TextEditingController();
@@ -20,7 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void dispose() {
     super.dispose();
-    _phoneController.dispose();
+    _emailController.dispose();
     _nameController.dispose();
     _passwordController.dispose();
     _rePasswordController.dispose();
@@ -54,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(height: 40,),
                       Padding(padding: EdgeInsets.all(8),
                       child: TextField(
-                        controller: _phoneController,
+                        controller: _emailController,
                         style: TextStyle(color: Colors.white),
                         decoration: const InputDecoration(
                             filled: true,
@@ -141,9 +143,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   ElevatedButton.styleFrom(backgroundColor: Colors.orange),
                   onPressed: () {
                     AuthMethods().signUpUser(
-                        phonenumber: _phoneController.text,
+                        email: _emailController.text,
                         password: _passwordController.text,
                         username: _nameController.text,
+                        bio: 'manduul',
+                        file: Uint8List(0)
                     );
                   },
                   child: Container(

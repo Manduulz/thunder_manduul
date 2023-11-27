@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:icodegram/auth_methods.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,17 +8,26 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-        title: Text('iCodegram',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: 'Lobster',
-            fontSize: 26,
-            fontWeight: FontWeight.w400,
-            color: Colors.white,
-          ),),
+      body: SafeArea(
+        child: Container(
+          child: Column(
+            children: [
+              Text('iCodegram',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Lobster',
+                  fontSize: 26,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),),
+              ElevatedButton(
+              onPressed: () {
+                AuthMethods().signOut();
+              },
+              child: Text('Sign Out'),
+            ),]
+          ),
+        )
       ),
     );
   }

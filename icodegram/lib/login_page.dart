@@ -4,7 +4,7 @@ import 'package:icodegram/model/user_model.dart';
 import 'package:icodegram/nav_bar/screen_layout.dart';
 import 'package:icodegram/register_page.dart';
 
-User newUser = User('Guest', 1234, 99999999);
+User newUser = User(username: 'Guest', uid: 'uid', photoUrl: 'photo', email: 'email', bio: 'bio', followers: [], following: []);
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

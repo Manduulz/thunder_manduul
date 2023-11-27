@@ -1,7 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:icodegram/storage_methods.dart';
+
+import 'model/user_model.dart' as model;
+
+
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -24,28 +31,58 @@ class AuthMethods {
     return result;
   }
 
-  Future<String> signUpUser ({
-    required String phonenumber,
+  Future<String> signUpUser({
+    required String email,
     required String password,
     required String username,
-}) async {
-    String result = 'Some error occured';
+    required String bio,
+    required Uint8List file,
+  }) async {
+    String res = "Some error Occured";
     try {
-      if (phonenumber.isNotEmpty || password.isNotEmpty || username.isNotEmpty){
-        UserCredential credential = await _auth.createUserWithEmailAndPassword(email: phonenumber, password: password);
+      if (email.isNotEmpty ||
+          password.isNotEmpty ||
+          username.isNotEmpty ||
+          bio.isNotEmpty ||
+          file != null) {
+        UserCredential cred = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
 
-        _firestore.collection('users').doc(credential.user!.uid).set({
-          'username' : username,
-          'uid' : credential.user!.uid,
-          'email' : phonenumber,
-          'following' : [],
-          'followers' : [],
-        });
+        model.User user = model.User(
+          username: username,
+          uid: cred.user!.uid,
+          photoUrl: photoUrl,
+          email: email,
+          bio: bio,
+          followers: [],
+          following: [],
+        );
+
+        await _firestore
+            .collection('users')
+            .doc(cred.user!.uid)
+            .set(user.toJson());
+
+        res = "success";
+      } else {
+        res = "Please enter all the fields";
       }
     } catch (err) {
-      result = err.toString();
+      return err.toString();
     }
-    print(result);
-    return result;
+    return res;
+  }
+  Future<model.User> getUserDetails() async {
+    User currentUser = _auth.currentUser!;
+
+    DocumentSnapshot documentSnapshot =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+
+    return model.User.fromSnap(documentSnapshot);
+  }
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 }
