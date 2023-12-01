@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:icodegram/auth_methods.dart';
+import 'package:icodegram/utils/auth_methods.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

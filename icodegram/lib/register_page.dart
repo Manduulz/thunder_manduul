@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:icodegram/auth_methods.dart';
+import 'package:icodegram/utils/auth_methods.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

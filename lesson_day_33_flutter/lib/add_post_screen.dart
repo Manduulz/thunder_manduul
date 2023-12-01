@@ -70,21 +70,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     });
   }
 
-  void postImage(String uid, String username, String profImage) async {
-    try {
-      String result = await FirestoreMethods().uploadPost(
-          _descriptionController.text, _image!, uid, username, profImage);
 
-      if (result == 'success') {
-        showSnackBar(context, 'Post uploaded');
-        clearImage();
-      } else {
-        showSnackBar(context, result);
-      }
-    } catch (e) {
-      showSnackBar(context, e.toString());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

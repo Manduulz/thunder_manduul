@@ -20,7 +20,7 @@ void main() async {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           if (snapshot.hasData) {
-            return const HomeScreen();
+            return const LoginScreen();
           } else if (snapshot.hasError) {
             return Scaffold(
               body: Center(

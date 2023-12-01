@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:icodegram/storage_methods.dart';
+import 'package:icodegram/utils/storage_methods.dart';
 
-import 'model/user_model.dart' as model;
+import '../model/user_model.dart' as model;
 
 
 
@@ -73,6 +73,32 @@ class AuthMethods {
       return err.toString();
     }
     return res;
+  }
+  Future<String> signInUser({
+    required String email,
+    required String password,
+  }) async {
+    String result = 'Some error occured';
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        result = 'success';
+      }
+    } catch (err) {
+      result = err.toString();
+    }
+    return result;
+  }
+  Future<String> signOutUser() async {
+    String result = 'Some error occured';
+    try {
+      await _auth.signOut();
+      result = 'success';
+    } catch (err) {
+      result = err.toString();
+    }
+    return result;
   }
   Future<model.User> getUserDetails() async {
     User currentUser = _auth.currentUser!;

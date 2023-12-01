@@ -21,7 +21,7 @@ class AuthMethods {
     String result = 'Some error occured';
     try {
       if (email.isNotEmpty || password.isNotEmpty || username.isNotEmpty) {
-        String img = 'assets/images/user.png';
+        String img = 'assets/images/user.jpeg';
         String path = img.substring(img.indexOf("/") + 1, img.lastIndexOf("/"));
 
         UserCredential credential = await _auth.createUserWithEmailAndPassword(

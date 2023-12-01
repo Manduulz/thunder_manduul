@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                  hintText: 'Email хаяг',
+                    hintText: 'Email хаяг',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

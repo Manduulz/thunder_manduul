@@ -1,13 +1,97 @@
+import 'dart:typed_data';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:icodegram/login_page.dart';
+import 'package:image_picker/image_picker.dart';
 
-class AddPostScreen extends StatelessWidget {
+import '../utils/firestore_methods.dart';
+import '../utils/utils.dart';
+
+class AddPostScreen extends StatefulWidget {
+  AddPostScreen({super.key});
+
+  @override
+  State<AddPostScreen> createState() => _AddPostScreenState();
+}
+
+class _AddPostScreenState extends State<AddPostScreen> {
+  Uint8List? _image;
   final TextEditingController _photoDetailEditor = TextEditingController();
-  final photoDetail;
-  AddPostScreen({super.key, this.photoDetail});
+
+  _selectImage(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return SimpleDialog(
+            title: const Text('Create Post'),
+            children: [
+              SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                onPressed: () async {
+                  Navigator.pop(context);
+                  Uint8List? image = await pickImage(ImageSource.camera);
+                  setState(() {
+                    _image = image;
+                  });
+                },
+                child: const Text('Photo with Camera'),
+              ),
+              SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                onPressed: () async {
+                  Navigator.pop(context);
+                  Uint8List? image = await pickImage(ImageSource.gallery);
+                  setState(() {
+                    _image = image;
+                  });
+                },
+                child: const Text('Image from Gallery'),
+              ),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
+            ],
+          );
+        });
+  }
+
+  @override
+  void dispose() {
+    _photoDetailEditor.dispose();
+    super.dispose();
+  }
+
+  void clearImage() {
+    setState(() {
+      _image = null;
+    });
+  }
+
+  void postImage(String uid, String username, String profImage) async {
+    try {
+      String result = await FirestoreMethods().uploadPost(
+          _photoDetailEditor.text, _image!, uid, username, profImage);
+
+      if (result == 'success') {
+        showSnackBar(context, 'Post uploaded');
+        clearImage();
+      } else {
+        showSnackBar(context, result);
+      }
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    var imageWidget =
+        _image == null ? const NetworkImage('url') : MemoryImage(_image!);
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -58,10 +142,33 @@ class AddPostScreen extends StatelessWidget {
                         children: [
                           Center(
                             child: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  _selectImage(context);
+                                },
                                 icon:
                                     Image.asset('assets/images/addImage.png')),
                           ),
+                          SizedBox(
+                              height: 45,
+                              width: 45,
+                              child: AspectRatio(
+                                aspectRatio: 487 / 451,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      image: _image == null
+                                          ? DecorationImage(
+                                              fit: BoxFit.fill,
+                                              alignment:
+                                                  FractionalOffset.topCenter,
+                                              image: NetworkImage(
+                                                  'https://images.unsplash.com/photo-1618042164219-62c820f10723?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'))
+                                          : DecorationImage(
+                                              fit: BoxFit.fill,
+                                              alignment:
+                                                  FractionalOffset.topCenter,
+                                              image: MemoryImage(_image!))),
+                                ),
+                              )),
                           const Center(
                             child: Text(
                               'Зураг оруулах',
@@ -120,6 +227,7 @@ class AddPostScreen extends StatelessWidget {
                           borderSide: BorderSide(color: Colors.grey)),
                       hintText: 'Энд бичнэ үү',
                       hintStyle: TextStyle(color: Colors.white),
+                      border: InputBorder.none,
                       suffixIcon: IconButton(
                         onPressed: _photoDetailEditor.clear,
                         padding: EdgeInsets.only(bottom: 40),
@@ -133,27 +241,27 @@ class AddPostScreen extends StatelessWidget {
             ),
             SizedBox(height: 280),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange.withAlpha(180),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)
-                )
-              ),
-                onPressed: (){},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange.withAlpha(180),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8))),
+                onPressed: () {
+                  postImage(newUser.uid, newUser.username, newUser.photoUrl);
+                },
                 child: Container(
                   width: 355,
                   height: 45,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(8)),
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
                     textAlign: TextAlign.center,
                     'Постлох',
                     style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontFamily: 'Rubik'
-                    ),
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontFamily: 'Rubik'),
                   ),
                 ))
           ],

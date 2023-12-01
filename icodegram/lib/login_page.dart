@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:icodegram/auth_methods.dart';
+import 'package:icodegram/utils/auth_methods.dart';
 import 'package:icodegram/model/user_model.dart';
 import 'package:icodegram/nav_bar/screen_layout.dart';
 import 'package:icodegram/register_page.dart';

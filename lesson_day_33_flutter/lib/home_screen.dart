@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 32,
               ),
               Text(
-                user.email,
+                user.name,
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
               SizedBox(

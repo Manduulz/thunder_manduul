@@ -87,13 +87,13 @@ class _SignUpState extends State<SignUp> {
                   onTap: () async {
                     // Load the image from the assets
                     ByteData data =
-                        await rootBundle.load('assets/images/user.png');
+                        await rootBundle.load('assets/images/user.jpeg');
                     Uint8List imageData = data.buffer.asUint8List();
 
                     // Create a reference to Firebase Storage
                     Reference ref = FirebaseStorage.instance
                         .ref()
-                        .child('assets/images/user.png');
+                        .child('assets/images/user.jpeg');
 
                     // Upload the image to Firebase Storage
                     await ref.putData(imageData);
