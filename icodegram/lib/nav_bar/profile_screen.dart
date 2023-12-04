@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../images_sync.dart';
 import '../model/user_model.dart' as model;
 import '../providers/user_provider.dart';
+import '../utils/auth_methods.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -37,17 +38,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: EdgeInsets.only(top: 18, left: 20),
-                child: Text(
-                  'iCodegram',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontFamily: 'Lobster',
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 18, left: 20),
+                    child: Text(
+                      'iCodegram',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: 'Lobster',
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                ),
+                  Padding(padding: EdgeInsets.only(left: 200)),
+                  IconButton(
+                    onPressed: () {
+                      AuthMethods().signOut();
+                    },
+                    icon: Icon(Icons.exit_to_app, color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
               Row(
                 children: [
