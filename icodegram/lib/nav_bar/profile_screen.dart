@@ -56,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Padding(padding: EdgeInsets.only(left: 200)),
                   IconButton(
                     onPressed: () {
-                      AuthMethods().signOut();
+                      Navigator.pop(context);
                     },
                     icon: Icon(Icons.exit_to_app, color: Colors.white,
                     ),
