@@ -7,6 +7,7 @@ import 'package:icodegram/firebase_options.dart';
 import 'package:icodegram/login_page.dart';
 import 'package:icodegram/nav_bar/home_screen.dart';
 import 'package:icodegram/nav_bar/profile_screen.dart';
+import 'package:icodegram/nav_bar/screen_layout.dart';
 import 'package:icodegram/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ void main () async {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData) {
-              return const ProfileScreen();
+              return ScreenLayout();
             } else if (snapshot.hasError) {
               return Scaffold(
                 body: Center(

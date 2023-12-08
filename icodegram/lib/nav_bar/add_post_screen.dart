@@ -3,8 +3,12 @@ import 'dart:typed_data';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:icodegram/login_page.dart';
+import 'package:icodegram/providers/user_provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
+import '../model/user_model.dart' as model;
+import '../model/user_model.dart';
 import '../utils/firestore_methods.dart';
 import '../utils/utils.dart';
 
@@ -89,6 +93,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<UserProvider>(context).getUser;
     var imageWidget =
         _image == null ? const NetworkImage('url') : MemoryImage(_image!);
     bool showImage = false;
@@ -115,157 +120,159 @@ class _AddPostScreenState extends State<AddPostScreen> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 40,
-            ),
-            Opacity(
-              opacity: 1,
-              child: Container(
-                width: double.infinity,
-                height: 160,
-                decoration: BoxDecoration(
-                    color: Colors.orange.withAlpha(30),
-                    borderRadius: BorderRadius.circular(34)),
-                margin: EdgeInsets.all(8),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DottedBorder(
-                    color: Colors.orange,
-                    borderType: BorderType.RRect,
-                    radius: Radius.circular(34),
-                    padding: EdgeInsets.all(8),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(34)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: IconButton(
-                                onPressed: () {
-                                  _selectImage(context);
-                                },
-                                icon:
-                                    Image.asset('assets/images/addImage.png')),
-                          ),
-                          SizedBox(
-                              height: 45,
-                              width: 45,
-                              child: AspectRatio(
-                                aspectRatio: 487 / 451,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      image: _image == null
-                                          ? DecorationImage(
-                                              fit: BoxFit.fill,
-                                              alignment:
-                                                  FractionalOffset.topCenter,
-                                              image: NetworkImage(
-                                                  'https://images.unsplash.com/photo-1618042164219-62c820f10723?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'))
-                                          : DecorationImage(
-                                              fit: BoxFit.fill,
-                                              alignment:
-                                                  FractionalOffset.topCenter,
-                                              image: MemoryImage(_image!))),
-                                ),
-                              )),
-                          const Center(
-                            child: Text(
-                              'Зураг оруулах',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontFamily: 'Rubik',
-                                fontWeight: FontWeight.w400,
-                                height: 0,
-                              ),
-                              textAlign: TextAlign.center,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 40,
+              ),
+              Opacity(
+                opacity: 1,
+                child: Container(
+                  width: double.infinity,
+                  height: 160,
+                  decoration: BoxDecoration(
+                      color: Colors.orange.withAlpha(30),
+                      borderRadius: BorderRadius.circular(34)),
+                  margin: EdgeInsets.all(8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DottedBorder(
+                      color: Colors.orange,
+                      borderType: BorderType.RRect,
+                      radius: Radius.circular(34),
+                      padding: EdgeInsets.all(8),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(34)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: IconButton(
+                                  onPressed: () {
+                                    _selectImage(context);
+                                  },
+                                  icon:
+                                      Image.asset('assets/images/addImage.png')),
                             ),
-                          )
-                        ],
-                      )
-                     ),
+                            SizedBox(
+                                height: 45,
+                                width: 45,
+                                child: AspectRatio(
+                                  aspectRatio: 487 / 451,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        image: _image == null
+                                            ? DecorationImage(
+                                                fit: BoxFit.fill,
+                                                alignment:
+                                                    FractionalOffset.topCenter,
+                                                image: NetworkImage(
+                                                    'https://images.unsplash.com/photo-1618042164219-62c820f10723?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'))
+                                            : DecorationImage(
+                                                fit: BoxFit.fill,
+                                                alignment:
+                                                    FractionalOffset.topCenter,
+                                                image: MemoryImage(_image!))),
+                                  ),
+                                )),
+                            const Center(
+                              child: Text(
+                                'Зураг оруулах',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontFamily: 'Rubik',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          ],
+                        )
+                       ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Row(
-                children: [
-                  Image.asset('assets/images/wrapText.png'),
-                  Text(
-                    "Зургийн тайлбар:",
-                    style: const TextStyle(
-                      fontFamily: "Rubik",
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                      height: 18 / 15,
-                    ),
-                    textAlign: TextAlign.left,
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Container(
-                height: 90,
-                decoration: BoxDecoration(
-                    color: Colors.grey.withAlpha(50),
-                    borderRadius: BorderRadius.circular(22)),
-                child: TextField(
-                  maxLines: 5,
-                  controller: _photoDetailEditor,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      filled: true,
-                      // fillColor: Colors.grey,
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(22),
-                          borderSide: BorderSide(color: Colors.grey)),
-                      hintText: 'Энд бичнэ үү',
-                      hintStyle: TextStyle(color: Colors.white),
-                      border: InputBorder.none,
-                      suffixIcon: IconButton(
-                        onPressed: _photoDetailEditor.clear,
-                        padding: EdgeInsets.only(bottom: 40),
-                        icon: Icon(
-                          Icons.clear,
-                          color: Colors.grey,
-                        ),
-                      )),
-                ),
-              ),
-            ),
-            SizedBox(height: 280),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange.withAlpha(180),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                onPressed: () {
-                  postImage(newUser.uid, newUser.username, newUser.photoUrl);
-                },
-                child: Container(
-                  width: 355,
-                  height: 45,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                  padding: EdgeInsets.only(top: 10),
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    'Постлох',
-                    style: TextStyle(
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Row(
+                  children: [
+                    Image.asset('assets/images/wrapText.png'),
+                    Text(
+                      "Зургийн тайлбар:",
+                      style: const TextStyle(
+                        fontFamily: "Rubik",
+                        fontSize: 15,
                         fontWeight: FontWeight.w400,
                         color: Colors.white,
-                        fontSize: 14,
-                        fontFamily: 'Rubik'),
+                        height: 18 / 15,
+                      ),
+                      textAlign: TextAlign.left,
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  height: 90,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.withAlpha(50),
+                      borderRadius: BorderRadius.circular(22)),
+                  child: TextField(
+                    maxLines: 5,
+                    controller: _photoDetailEditor,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                        filled: true,
+                        // fillColor: Colors.grey,
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(22),
+                            borderSide: BorderSide(color: Colors.grey)),
+                        hintText: 'Энд бичнэ үү',
+                        hintStyle: TextStyle(color: Colors.white),
+                        border: InputBorder.none,
+                        suffixIcon: IconButton(
+                          onPressed: _photoDetailEditor.clear,
+                          padding: EdgeInsets.only(bottom: 40),
+                          icon: Icon(
+                            Icons.clear,
+                            color: Colors.grey,
+                          ),
+                        )),
                   ),
-                ))
-          ],
+                ),
+              ),
+              SizedBox(height: 280),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange.withAlpha(180),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8))),
+                  onPressed: () {
+                    postImage(user.uid, user.username, user.photoUrl);
+                  },
+                  child: Container(
+                    width: 355,
+                    height: 45,
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                    padding: EdgeInsets.only(top: 10),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      'Постлох',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontFamily: 'Rubik'),
+                    ),
+                  )),
+            ],
+          ),
         ),
       ),
     );

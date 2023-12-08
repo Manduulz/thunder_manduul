@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:icodegram/login_page.dart';
 import 'package:provider/provider.dart';
 import '../images_sync.dart';
 import '../model/user_model.dart' as model;
@@ -56,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Padding(padding: EdgeInsets.only(left: 200)),
                   IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
                     },
                     icon: Icon(Icons.exit_to_app, color: Colors.white,
                     ),

@@ -1,11 +1,49 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:icodegram/utils/firestore_methods.dart';
+import 'package:icodegram/utils/utils.dart';
 
 
 
-class PostCard extends StatelessWidget {
+class PostCard extends StatefulWidget {
   final snap;
   const PostCard({super.key, this.snap});
+
+  @override
+  State<PostCard> createState() => _PostCardState();
+}
+
+class _PostCardState extends State<PostCard> {
+  int commentLen = 0;
+  bool isLikeAnimating = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCommentLen();
+  }
+
+  fetchCommentLen() async {
+    try {
+      QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.snap['postID'])
+          .collection('comments')
+          .get();
+      commentLen = snap.docs.length;
+    } catch (err) {
+      showSnackBar(context, err.toString());
+    }
+  }
+
+  deletePost(String postID) async {
+    try {
+      await FirestoreMethods().deletePost(postID);
+    } catch (err) {
+      showSnackBar(context, err.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +57,7 @@ class PostCard extends StatelessWidget {
           child: Row(children: [
             CircleAvatar(
               radius: 16,
-              child: SvgPicture.asset('assets/images/battery.svg'),
-
+              backgroundImage: NetworkImage(widget.snap['profImage']),
             ),
             SizedBox(height: 8,),
             Expanded(child: Padding(
@@ -30,7 +67,7 @@ class PostCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Янаг Элбэгээ',
+                    widget.snap['username'].toString(),
                     style: TextStyle(
                         fontWeight: FontWeight.bold
                     ),
@@ -50,6 +87,7 @@ class PostCard extends StatelessWidget {
                         ].map(
                                 (e) => InkWell(
                               onTap: () {
+                                deletePost(widget.snap['postID'].toString());
                                 Navigator.pop(context);
                               },
                               child: Container(
@@ -68,7 +106,7 @@ class PostCard extends StatelessWidget {
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.35,
           width: double.infinity,
-          child: Image.network('https://www.ctvnews.ca/polopoly_fs/1.1343629.1372297282!/httpImage/image.jpg_gen/derivatives/landscape_1020/image.jpg'),)
+          child: Image.network(widget.snap['postUrl'].toString()),)
       ],),
     );
   }
