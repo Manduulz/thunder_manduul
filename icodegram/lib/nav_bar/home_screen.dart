@@ -34,51 +34,37 @@ class _HomeScreenState extends State<HomeScreen> {
     model.User? user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text('iCodegram',
+        style: TextStyle(
+          fontFamily: 'Lobster',
+          fontSize: 26,
+          fontWeight: FontWeight.w400,
+          color: Colors.white
+        ),),
+      ),
       body: SafeArea(
-          child: Column(
-        children: [
-          Row(
-            children: [
-              Column(children: [
-                Text(
-                  'iCodegram',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Lobster',
-                    fontSize: 26,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
-                  ),
-                ),
-                StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-                    builder: (context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                      if(snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
-                          itemBuilder: (ctx, index) => Container(
-                            margin: EdgeInsets.symmetric(
-                              horizontal: width * 0.1,
-                              vertical: 15
-                            ),
-                            child: PostCard(
-                              snap: snapshot.data!.docs[index].data(),
-                            ),
-                          )
-                      );
-                    }
-                )
-              ]),
-            ],
-          ),
-
-        ],
-      )),
+        child: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+            builder: (context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (ctx, index) => Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: width * 0.01, vertical: 10),
+                        child: PostCard(
+                          snap: snapshot.data!.docs[index].data(),
+                        ),
+                      ));
+            }),
+      ),
     );
   }
 }

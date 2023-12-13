@@ -22,7 +22,7 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
           actions: [
             IconButton(onPressed: (){}, icon: Icon(Icons.messenger_outline),)
           ],
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.black,
           centerTitle: false,
           title: SvgPicture.asset('assets/images/heart.svg',
             height: 40,)
@@ -41,7 +41,7 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
               itemBuilder: (ctx, index) => Container(
                 margin: EdgeInsets.symmetric(
                   horizontal: width * 0.1,
-                  vertical: 15,
+                  vertical: 16,
                 ),
                 child: PostCard(
                   snap: snapshot.data!.docs[index].data(),

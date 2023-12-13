@@ -50,243 +50,239 @@ class _PostCardState extends State<PostCard> {
       showSnackBar(context, err.toString());
     }
   }
-
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
-    return Container(
-      color: Colors.white,
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16)
-                .copyWith(right: 0),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 16,
-                  backgroundImage: NetworkImage(widget.snap['profImage']),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.snap['username'].toString(),
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+    return SingleChildScrollView(
+      child: Container(
+        color: Colors.black,
+        padding: EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 14)
+                  .copyWith(right: 0),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 16,
+                    backgroundImage: NetworkImage(widget.snap['profImage']),
                   ),
-                ),
-                IconButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => Dialog(
-                                child: ListView(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 16.0),
-                                    shrinkWrap: true,
-                                    children: ['Delete']
-                                        .map((e) => InkWell(
-                                              onTap: () {
-                                                deletePost(widget.snap['postID']
-                                                    .toString());
-                                                Navigator.pop(context);
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 12.0,
-                                                    horizontal: 16.0),
-                                                child: Text(e),
-                                              ),
-                                            ))
-                                        .toList()),
-                              ));
-                    },
-                    icon: Icon(Icons.more_vert))
-              ],
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.35,
-            width: double.infinity,
-            child: Image.network(widget.snap['postUrl'].toString()),
-          ),
-          GestureDetector(
-            onDoubleTap: () {
-              FirestoreMethods().likesPost(
-                widget.snap['postID'].toString(),
-                user.uid,
-                widget.snap['likes'],
-              );
-              setState(() {
-                isLikeAnimating = true;
-              });
-            },
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.35,
-                  width: double.infinity,
-                  child: Image.network(
-                    widget.snap['postUrl'].toString(),
-                    fit: BoxFit.cover,
+                  SizedBox(
+                    height: 6,
                   ),
-                ),
-                AnimatedOpacity(
-                  opacity: isLikeAnimating ? 1 : 0,
-                  duration: const Duration(milliseconds: 200),
-                  child: LikeAnimation(
-                    isAnimating: isLikeAnimating,
-                    duration: const Duration(milliseconds: 400),
-                    onEnd: () {
-                      setState(() {
-                        isLikeAnimating = false;
-                      });
-                    },
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.white,
-                      size: 100,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Row(
-            children: [
-              LikeAnimation(
-                isAnimating: false,
-                smalllike: true,
-                child: IconButton(
-                  icon: true
-                      ? Icon(
-                          Icons.favorite,
-                          color: Colors.red,
-                        )
-                      : const Icon(
-                          Icons.favorite_border,
-                        ),
-                  onPressed: () => FirestoreMethods().likesPost(
-                      widget.snap['postID'].toString(),
-                      user.uid,
-                      widget.snap['likes']),
-                ),
-              ),
-              IconButton(
-                icon: Icon(Icons.comment_outlined),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => CommentsScreen(
-                      postID: widget.snap['postID'].toString(),
-                    ),
-                  ),
-                ),
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.comment_outlined,
-                ),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => CommentsScreen(
-                      postID: widget.snap['postID'].toString(),
-                    ),
-                  ),
-                ),
-              ),
-              IconButton(icon: Icon(Icons.send), onPressed: () {}),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: IconButton(
-                      icon: Icon(Icons.bookmark_border), onPressed: () {}),
-                ),
-              )
-            ],
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DefaultTextStyle(
-                    style: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(fontWeight: FontWeight.w800),
-                    child: Text(
-                      'likes',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    )
-                ),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.only(
-                    top: 8
-                  ),
-                  child: RichText(
-                    text: TextSpan(
-                      style: TextStyle(color: Colors.black),
-                      children: [
-                        TextSpan(
-                          text: widget.snap['username'].toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.snap['username'].toString(),
+                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                           ),
-                        ),
-                        TextSpan(
-                          text: '${widget.snap['description']}',
-                        )
-                      ]
-                    ),
-                  ),
-                ),
-                InkWell(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                    child: Text(
-                      'View all $commentLen comments',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black
+                        ],
                       ),
                     ),
                   ),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => CommentsScreen(
-                            postID: widget.snap['postID'].toString(),
-                        )
-                    )
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 4),
-                  child: Text(
-                    DateFormat.yMMMd()
-                        .format(widget.snap['datePublished'].toDate()),
-                    style: TextStyle(
-                      color: Colors.black
+                  IconButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                                  child: ListView(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10.0),
+                                      shrinkWrap: true,
+                                      children: ['Delete']
+                                          .map((e) => InkWell(
+                                                onTap: () {
+                                                  deletePost(widget
+                                                      .snap['postId']
+                                                      .toString());
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 12.0,
+                                                      horizontal: 16.0),
+                                                  child: Text(e),
+                                                ),
+                                              ))
+                                          .toList(),
+                                  ),
+                                ));
+                      },
+                      icon: Icon(Icons.delete_outline, color: Colors.white,)),
+                  IconButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                              child: ListView(
+                                padding:
+                                EdgeInsets.symmetric(vertical: 10.0),
+                                shrinkWrap: true,
+                                children: ['Edit Post']
+                                    .map((e) => InkWell(
+                                  onTap: () {
+                                    deletePost(widget
+                                        .snap['postId']
+                                        .toString());
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 12.0,
+                                        horizontal: 16.0),
+                                    child: Text(e),
+                                  ),
+                                ))
+                                    .toList(),
+                              ),
+                            ));
+                      },
+                      icon: Icon(Icons.more_vert, color: Colors.white,)),
+                ],
+              ),
+            ),
+            // SizedBox(
+            //   height: MediaQuery.of(context).size.height * 0.35,
+            //   width: double.infinity,
+            //   child: Image.network(widget.snap['postUrl'].toString()),
+            // ),
+            GestureDetector(
+              onTap: () {
+                FirestoreMethods().likesPost(
+                  widget.snap['postID'].toString(),
+                  user.uid,
+                  widget.snap['likes'],
+                );
+                setState(() {
+                  isLikeAnimating = true;
+                });
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    width: double.infinity,
+                    child: Image.network(
+                      widget.snap['postUrl'].toString(),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                )
+                  AnimatedOpacity(
+                    opacity: isLikeAnimating ? 1 : 0,
+                    duration: const Duration(milliseconds: 200),
+                    child: LikeAnimation(
+                      isAnimating: isLikeAnimating,
+                      duration: const Duration(milliseconds: 400),
+                      onEnd: () {
+                        setState(() {
+                          isLikeAnimating = false;
+                        });
+                      },
+                      child: Icon(
+                        Icons.favorite,
+                        color: Colors.white,
+                        size: 100,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                LikeAnimation(
+                  isAnimating:
+                      ((widget.snap['likes'] ?? []) as List).contains(user.uid),
+                  smalllike: true,
+                  child: IconButton(
+                    icon: ((widget.snap['likes'] ?? []) as List)
+                            .contains(user.uid)
+                        ? Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          )
+                        : const Icon(
+                            Icons.favorite_border,
+                      color: Colors.white,
+                          ),
+                    onPressed: () => FirestoreMethods().likesPost(
+                      widget.snap['postID'].toString(),
+                      user.uid,
+                      ((widget.snap['likes'] ?? []) as List),
+                    ),
+                  ),
+                ),
               ],
             ),
-          )
-        ],
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DefaultTextStyle(
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontWeight: FontWeight.w800),
+                      child: Text(
+                        '${((widget.snap['likes'] ?? []) as List).length} likes',
+                        style: TextStyle(color: Colors.white)
+                        // Theme.of(context).textTheme.bodyMedium,
+                      )),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.only(top: 8),
+                    child: RichText(
+                      text: TextSpan(
+                          style: TextStyle(color: Colors.white),
+                          children: [
+                            TextSpan(
+                              text: widget.snap['username'].toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white
+                              ),
+                            ),
+                            TextSpan(
+                              text: '${widget.snap['description']}',
+                            )
+                          ]),
+                    ),
+                  ),
+                  InkWell(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 2),
+                      child: Text(
+                        'View all $commentLen comments',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ),
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CommentsScreen(
+                              postID: widget.snap['postId'].toString(),
+                            ))),
+                  ),
+                  // Container(
+                  //   padding: EdgeInsets.symmetric(vertical: 2),
+                  //   child: Text(
+                  //     DateFormat.yMMMd()
+                  //         .format(widget.snap['datePublished'].toDate()),
+                  //     style: TextStyle(color: Colors.white),
+                  //   ),
+                  // )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
