@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1020886904948",
+    "project_id": "thunder-lesson-day-39-fdd85",
+    "storage_bucket": "thunder-lesson-day-39-fdd85.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020886904948:android:b501f0824a8ed3e0eb6121",
+        "android_client_info": {
+          "package_name": "com.example.lesson_day_39_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzZ6iNMguRstF6xp_njvi0ek0Gj-80a-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

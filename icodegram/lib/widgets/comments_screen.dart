@@ -69,6 +69,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
           }),
       bottomNavigationBar: SafeArea(
         child: Container(
+          color: Colors.white,
           height: kToolbarHeight,
           margin:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
